@@ -1,8 +1,12 @@
 # Trabajo: **"Nociones de Arquitectura de la información"**
 Analítica de Grandes Datos
+
 Curso Especialización en AI Universidad Nacional de Colombia
+
 Departamento de Ciencias de la Computación y la Decisión
+
 Facultad de Minas
+
 Universidad Nacional de Colombia
 
 
