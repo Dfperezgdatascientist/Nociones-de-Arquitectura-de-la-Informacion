@@ -1,4 +1,4 @@
-# Trabajo: **"Nociones de Arquitectura de la información"**
+# Trabajo: _"Nociones de Arquitectura de la información"_
 Analítica de Grandes Datos
 
 Curso Especialización en AI Universidad Nacional de Colombia
