@@ -6,7 +6,7 @@ Facultad de Minas
 Universidad Nacional de Colombia
 
 
- + Contenido
+# Contenido
  
 ## 1	Comprensión del negocio	pg. 1
 
