@@ -10,13 +10,13 @@ Universidad Nacional de Colombia
  
 1	Comprensión del negocio	pg. 1
 
-1.1	Descripción del contexto del negocio. pg.1
+  + 1.1	Descripción del contexto del negocio. pg.1
 
-1.2	Identificación del problema:	pg.2
+  + 1.2	Identificación del problema:	pg.2
 
-1.3	Determinación de objetivos:	pg.2
+  + 1.3	Determinación de objetivos:	pg.2
 
-1.4	Evaluación de la situación actual:	pg.3
+  + 1.4	Evaluación de la situación actual:	pg.3
 
 2	Comprensión de los datos	pg.3
 
