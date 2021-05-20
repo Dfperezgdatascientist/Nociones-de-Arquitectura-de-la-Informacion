@@ -1,0 +1,2 @@
+# Nociones-de-Arquitectura-de-la-Informacion
+Trabajo final de nociones de arquitectura de la información,  datos pertenecen al sector servicios específicamente contact center, donde se recolectan a partir de llamadas que los usuarios realizan. Las marcas contratan con el contact center el manejo de la información en la etapa postventa de sus productos, allí se contratan asesores que se encargan de responder inquietudes, quejas o reclamos que los usuarios tienen con respecto a un producto.
