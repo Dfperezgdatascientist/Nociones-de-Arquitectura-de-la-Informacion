@@ -1,0 +1,13 @@
+# Cálculos #
+#Hallamos valores maximos y minimos por la variable duracion
+db.BDU.find().sort({Duracion:-1}).limit(1) // Regristro con el valor MAX
+db.BDU.find().sort({Duracion:+1}).limit(1) // Regristro con el valor MIN
+
+# Calculamos el promedio de duración promedio por motivo de llamada
+db.BDU.aggregate([{$group: {_id:"$Motivo", Duracion_promedio: {$avg:"$Duracion"} } }]) // duración promedio por motivo de llamada
+
+# Calculamos le promedio de NPS y SATU por tipologia
+# Promedio de NPS
+db.BDU.aggregate([{ $lookup : { from : 'Encuestas', localField : 'Callid', foreignField : 'Callid', as : 'combined'} },  { $unwind: '$combined' },{ $group: { _id: '$Motivo', NPS_promedio : { $avg : '$combined.NPS' } } }]); // NPS prom por motivo
+# Promedio de SATU
+db.BDU.aggregate([{ $lookup : { from : 'Encuestas', localField : 'Callid', foreignField : 'Callid', as : 'combined'} },  { $unwind: '$combined' },{ $group: { _id: '$Motivo', SATU_promedio : { $avg : '$combined.SATU' } } }]); // SATU prom por motivo

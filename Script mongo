@@ -1,0 +1,29 @@
+# Para conectar
+mongo "mongodb+srv://cluster0.xyd3w.mongodb.net/bases" --username Efra_AI
+
+show collections
+
+# Creamos base de datos 1 #
+db.BDU.insertMany([{"Callid":"1","CC":"333962","Duracion":100,"Motivo":"Motivo 1","Fecha":{"$date":"2021-01-05T00:00:00.000Z"}},{"Callid":"2","CC":"333963","Duracion":200,"Motivo":"Motivo 1","Fecha":{"$date":"2021-01-05T00:00:00.000Z"}},{"Callid":"3","CC":"333964","Duracion":650,"Motivo":"Motivo 2","Fecha":{"$date":"2021-01-05T00:00:00.000Z"}},{"Callid":"4","CC":"333965","Duracion":300,"Motivo":"Motivo 3","Fecha":{"$date":"2021-01-05T00:00:00.000Z"}},{"Callid":"5","CC":"333966","Duracion":333,"Motivo":"Motivo 4","Fecha":{"$date":"2021-01-05T00:00:00.000Z"}},{"Callid":"6","CC":"333967","Duracion":250,"Motivo":"Motivo 4","Fecha":{"$date":"2021-01-05T00:00:00.000Z"}},{"Callid":"7","CC":"333968","Duracion":450,"Motivo":"Motivo 3","Fecha":{"$date":"2021-01-05T00:00:00.000Z"}},{"Callid":"8","CC":"333969","Duracion":457,"Motivo":"Motivo 5","Fecha":{"$date":"2021-01-05T00:00:00.000Z"}},{"Callid":"9","CC":"333960","Duracion":987,"Motivo":"Motivo 4","Fecha":{"$date":"2021-01-05T00:00:00.000Z"}},{"Callid":"10","CC":"333971","Duracion":159,"Motivo":"Motivo 5","Fecha":{"$date":"2021-01-05T00:00:00.000Z"}},{"Callid":"11","CC":"333972","Duracion":654,"Motivo":"Motivo 5","Fecha":{"$date":"2021-01-05T00:00:00.000Z"}},{"Callid":"12","CC":"333973","Duracion":786,"Motivo":"Motivo 5","Fecha":{"$date":"2021-01-05T00:00:00.000Z"}},{"Callid":"13","CC":"333974","Duracion":423,"Motivo":"Motivo 4","Fecha":{"$date":"2021-01-05T00:00:00.000Z"}},{"Callid":"14","CC":"333975","Duracion":564,"Motivo":"Motivo 4","Fecha":{"$date":"2021-01-05T00:00:00.000Z"}},{"Callid":"15","CC":"333976","Duracion":453,"Motivo":"Motivo 1","Fecha":{"$date":"2021-01-05T00:00:00.000Z"}},{"Callid":"16","CC":"333977","Duracion":489,"Motivo":"Motivo 2","Fecha":{"$date":"2021-01-05T00:00:00.000Z"}},{"Callid":"17","CC":"333978","Duracion":357,"Motivo":"Motivo 3","Fecha":{"$date":"2021-01-05T00:00:00.000Z"}},{"Callid":"18","CC":"333979","Duracion":258,"Motivo":"Motivo 4","Fecha":{"$date":"2021-01-05T00:00:00.000Z"}},{"Callid":"19","CC":"333980","Duracion":951,"Motivo":"Motivo 2","Fecha":{"$date":"2021-01-05T00:00:00.000Z"}},{"Callid":"20","CC":"333981","Duracion":486,"Motivo":"Motivo 2","Fecha":{"$date":"2021-01-05T00:00:00.000Z"}}]);
+ 
+
+ 
+# Creamos base de datos 2 #
+db.Encuestas.insertMany([{"Callid":"1","CC":"333962","NPS":2,"SATU":1},  {"Callid":"2","CC":"333963","NPS":2,"SATU":1},  {"Callid":"3","CC":"333964","NPS":3,"SATU":3},  {"Callid":"4","CC":"333965","NPS":4,"SATU":5},  {"Callid":"5","CC":"333966","NPS":4,"SATU":5},  {"Callid":"6","CC":"333967","NPS":3,"SATU":5},  {"Callid":"7","CC":"333968","NPS":5,"SATU":4},  {"Callid":"8","CC":"333969","NPS":3,"SATU":4},  {"Callid":"9","CC":"333960","NPS":3,"SATU":3},  {"Callid":"10","CC":"333971","NPS":5,"SATU":5},  {"Callid":"11","CC":"333972","NPS":5,"SATU":3},  {"Callid":"12","CC":"333973","NPS":4,"SATU":5},  {"Callid":"13","CC":"333974","NPS":4,"SATU":4},  {"Callid":"14","CC":"333975","NPS":3,"SATU":4},  {"Callid":"15","CC":"333976","NPS":3,"SATU":2},  {"Callid":"16","CC":"333977","NPS":4,"SATU":3},  {"Callid":"17","CC":"333978","NPS":5,"SATU":4},  {"Callid":"21","CC":"333979","NPS":3,"SATU":5},  {"Callid":"22","CC":"333980","NPS":2,"SATU":5},  {"Callid":"23","CC":"333981","NPS":5,"SATU":4}  ]);
+  
+  
+# Cálculos #
+#Hallamos valores maximos y minimos por la variable duracion
+db.BDU.find().sort({Duracion:-1}).limit(1) // Regristro con el valor MAX
+db.BDU.find().sort({Duracion:+1}).limit(1) // Regristro con el valor MIN
+
+# Calculamos el promedio de duración promedio por motivo de llamada
+db.BDU.aggregate([{$group: {_id:"$Motivo", Duracion_promedio: {$avg:"$Duracion"} } }]) // duración promedio por motivo de llamada
+
+# Calculamos le promedio de NPS y SATU por tipologia
+# Promedio de NPS
+db.BDU.aggregate([{ $lookup : { from : 'Encuestas', localField : 'Callid', foreignField : 'Callid', as : 'combined'} },  { $unwind: '$combined' },{ $group: { _id: '$Motivo', NPS_promedio : { $avg : '$combined.NPS' } } }]); // NPS prom por motivo
+# Promedio de SATU
+db.BDU.aggregate([{ $lookup : { from : 'Encuestas', localField : 'Callid', foreignField : 'Callid', as : 'combined'} },  { $unwind: '$combined' },{ $group: { _id: '$Motivo', SATU_promedio : { $avg : '$combined.SATU' } } }]); // SATU prom por motivo
+
+
